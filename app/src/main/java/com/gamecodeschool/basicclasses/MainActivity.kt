@@ -1,6 +1,7 @@
 package com.gamecodeschool.basicclasses
 
 import Carrier
+import Destroyer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,35 +19,27 @@ class MainActivity : AppCompatActivity() {
 
         val friendlyShipyard = ShipYard()
 
-        // Uh oh!
-        friendlyDestroyer.takeDamage(enemyDestroyer.shootShell())
-        friendlyDestroyer.takeDamage(enemyCarrier.launchAerialAttack())
+        // 小さな戦い
+        friendlyDestroyer.takeDamage(enemyDestroyer.attack())
+        friendlyDestroyer.takeDamage(enemyCarrier.attack())
+        enemyCarrier.takeDamage(friendlyCarrier.attack())
+        enemyCarrier.takeDamage(friendlyDestroyer.attack())
 
-        // Fight back
-        enemyCarrier.takeDamage(friendlyCarrier.launchAerialAttack())
-        enemyCarrier.takeDamage(friendlyDestroyer.shootShell())
+        // 供給状況の確認
+        friendlyDestroyer.showStats()
+        friendlyCarrier.showStats()
 
-        // Take stock of the supplies situation
-        Log.d("${friendlyDestroyer.name} ammo = ",
-                "${friendlyDestroyer.ammo}")
+        // 造船所に停泊する
+        friendlyShipyard.serviceShip(friendlyCarrier)
+        friendlyShipyard.serviceShip(friendlyDestroyer)
 
-        Log.d("${friendlyCarrier.name} attacks = ",
-                "${friendlyCarrier.attacksRemaining}")
+        // 供給状況を確認する
+        friendlyDestroyer.showStats()
+        friendlyCarrier.showStats()
 
-        // Dock at the shipyard
-        friendlyShipyard.serviceCarrier(friendlyCarrier)
-        friendlyShipyard.serviceDestroyer(friendlyDestroyer)
-
-        // Take stock of the supplies situation again
-        Log.d("${friendlyDestroyer.name} ammo = ",
-                "${friendlyDestroyer.ammo}")
-
-        Log.d("${friendlyCarrier.name} attacks = ",
-                "${friendlyCarrier.attacksRemaining}")
-
-        // Finish off the enemy
-        enemyDestroyer.takeDamage(friendlyDestroyer.shootShell())
-        enemyDestroyer.takeDamage(friendlyCarrier.launchAerialAttack())
-        enemyDestroyer.takeDamage(friendlyDestroyer.shootShell())
+        // 敵を倒す
+        enemyDestroyer.takeDamage(friendlyDestroyer.attack())
+        enemyDestroyer.takeDamage(friendlyCarrier.attack())
+        enemyDestroyer.takeDamage(friendlyDestroyer.attack())
     }
 }

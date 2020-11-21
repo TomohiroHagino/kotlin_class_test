@@ -1,16 +1,13 @@
 package com.gamecodeschool.basicclasses
 
 import Carrier
+import android.util.Log
 
 class ShipYard {
 
-    // 駆逐艦を使用する
-    fun serviceDestroyer(destroyer: Destroyer){
-        destroyer.serviceShip()
-    }
-
-    // 空母を使用する。
-    fun serviceCarrier(carrier: Carrier){
-        carrier.serviceShip()
+    // shipを使用する
+    fun serviceShip(shipToBeServiced: Ship){
+        shipToBeServiced.serviceShip()
+        Log.i("Servicing","${shipToBeServiced.name}")
     }
 }
